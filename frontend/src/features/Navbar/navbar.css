@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.cart_no {
+  /* margin-right: 12px; */
+  position: absolute;
+  right: -7px;
+  top: -6px;
+  border-radius: 50%;
+  /* border: none; */
+  padding: 6px;
+  height: 20px;
+  background: red;
+  color: white;
+}
+.fonts{
+  font-family: 'Pacifico', cursive;
+  font-family: 'Playfair Display', serif;
+  font-family: 'Roboto', sans-serif;
+}
+.cartIcon {
+  cursor: pointer;
+}
+.cartIcon:focus {
+  outline: none;
+  border: none;
+}
+.slider1 {
+  /* background: #efeef2; */
+  height: 75pt;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  touch-action: none;
+}
+
+.slider1:before {
+  left: 0;
+  top: 0;
+}
+.slider1:after,
+.slider1:before {
+  /* background: linear-gradient(
+      to right,
+      #efeef2 0%,
+      hsla(0, 0%, 100%, 0) 100%
+  ); */
+  content: "";
+  height: 75pt;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+}
+.slider1:after {
+  right: 0;
+  top: 0;
+  transform: rotateZ(180deg);
+}
+.slider1:after,
+.slider1:before {
+  /* background: linear-gradient(
+      to right,
+      #efeef2 0%,
+      hsla(0, 0%, 100%, 0) 100%
+  ); */
+  content: "";
+  height: 75pt;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+}
+
+.slider1 .slide-track-1 {
+  animation: scroll-l 30s linear infinite;
+  display: flex;
+  width: 3500px;
+}
+.slider1 .slide-track-2 {
+  animation: scroll-r 30s linear infinite;
+  display: flex;
+  width: 3500px;
+}
+
+ .slider1 .slide {
+  height: 75pt;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.slider1 .slide img {
+  width: 180px;
+
+  vertical-align: middle;
+  margin: 0 auto;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
+ .slider1:hover {
+  animation: none;
+}
+
+@keyframes scroll-l {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(calc(-250px * 7));
+  }
+}
+@keyframes scroll-r {
+  100% {
+      transform: translateX(0);
+  }
+  0% {
+      transform: translateX(calc(-250px * 7));
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .cart_no {
+    position: absolute;
+    right: -5px;
+    top: -8px;
+    border-radius: 50%;
+    padding: 6px;
+    height: 20px;
+    background: red;
+    color: white;
+  }
+  .display{
+    display: none;
+  }
+}
