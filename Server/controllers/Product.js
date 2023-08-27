@@ -1,6 +1,5 @@
 const { Product } = require("../models/Product");
 
-
 // add product
 exports.createProduct = async (req, res) => {
   const product = await new Product(req.body);
@@ -13,8 +12,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-
-
 // fetch All product
 exports.fetchProduct = async (req, res) => {
   try {
@@ -25,7 +22,6 @@ exports.fetchProduct = async (req, res) => {
     console.log(error);
   }
 };
-
 
 // sort filtering and  pagination
 exports.filterProduct = async (req, res) => {
@@ -47,6 +43,17 @@ exports.filterProduct = async (req, res) => {
     query = query.sort({ [req.query._sort]: req.query._order });
   }
 
+  if (req.query.search) {
+    query=query.find({
+      $or: [
+        { title: { $regex: req.query.search, $options: "i" } },
+        { brand: { $regex: req.query.search, $options: "i" } },
+        { category: { $regex: req.query.search, $options: "i" } },
+        { description: { $regex: req.query.search, $options: "i" } },
+      ],
+    });
+  }
+
   const totalDocs = await totalProductsQuery.count().exec();
   console.log({ totalDocs });
 
@@ -58,7 +65,7 @@ exports.filterProduct = async (req, res) => {
 
   try {
     const docs = await query.exec();
-    res.set('X-Total-Count', totalDocs);
+    res.set("X-Total-Count", totalDocs);
     res.status(200).json(docs);
   } catch (err) {
     res.status(400).json(err);
@@ -67,7 +74,7 @@ exports.filterProduct = async (req, res) => {
 
 // fetch product by id
 exports.fetchProductById = async (req, res) => {
-  const{id}=req.params
+  const { id } = req.params;
   try {
     const product = await Product.findById(id);
     res.status(200).json(product);
@@ -80,16 +87,14 @@ exports.fetchProductById = async (req, res) => {
 // updateProductby id
 
 exports.updateProduct = async (req, res) => {
-  const{id}=req.params
+  const { id } = req.params;
   try {
-    const product = await Product.findByIdAndUpdate(id,req.body,{new:true});
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     res.status(200).json(product);
   } catch (error) {
     res.status(401).json(error);
     console.log(error);
   }
 };
-
-
-
-

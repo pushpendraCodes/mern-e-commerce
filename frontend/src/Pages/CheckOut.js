@@ -1,6 +1,4 @@
-
-
-import {  useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
@@ -13,12 +11,15 @@ import {
 } from "../features/Cart/CartSlice";
 
 import { UpdateUserAsync } from "../features/user/userSlice";
-import { CreateOrderAsync } from "../features/Order/OrderSlice";
+import { CreateOrderAsync, ordersStatus } from "../features/Order/OrderSlice";
 import { currentOrder } from "../features/Order/OrderSlice";
 import { useNavigate } from "react-router-dom";
 import { logged_user_details } from "../features/user/userSlice";
 import { price_Calc } from "../app/Costant";
+import Loader from "../features/common/Loader";
 export function Checkout() {
+  let status = useSelector(ordersStatus);
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const user = useSelector(logged_user_details);
@@ -94,8 +95,6 @@ export function Checkout() {
         status: "pending",
       };
 
-
-
       dispatch(CreateOrderAsync(order));
     } else {
       alert("please choose address & payment mode");
@@ -104,17 +103,16 @@ export function Checkout() {
 
   const [showform, setshowform] = useState(false);
 
-
   return (
     <div>
-     {!Cart.length && <Navigate to="/" replace={true}></Navigate>}
-      {CurrentOrder && CurrentOrder.paymentMethod === 'cash' && (
+      {!Cart.length && <Navigate to="/" replace={true}></Navigate>}
+      {CurrentOrder && CurrentOrder.paymentMethod === "cash" && (
         <Navigate
           to={`/order-success/${CurrentOrder.id}`}
           replace={true}
         ></Navigate>
       )}
-      {CurrentOrder && CurrentOrder.paymentMethod === 'card' && (
+      {CurrentOrder && CurrentOrder.paymentMethod === "card" && (
         <Navigate to={`/stripe-checkout/`} replace={true}></Navigate>
       )}
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5  px-10">
@@ -582,7 +580,11 @@ export function Checkout() {
                   className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                 >
                   <img className="w-10 h-10 mx-3" src="order.png" alt="" />{" "}
-                  Order Now
+                  {status === "loading" ? (
+                    <Loader loaderColor="white" textColor="white" />
+                  ) : (
+                    "order Now"
+                  )}
                 </div>
               </div>
               <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

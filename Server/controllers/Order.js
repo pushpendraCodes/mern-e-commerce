@@ -19,8 +19,7 @@ exports.CreateOrder = async (req, res) => {
     let doc = await order.save();
     const user = await User.findById(order.user)
     // we can use await for this also
-    console.log(doc,"mail")
-    // sendMail({to:user.email,html:invoiceTemplate(order),subject:'Order Received' })
+     sendMail({to:user.email,html:invoiceTemplate(order),subject:'Order Received' })
     res.status(201).json(doc);
   } catch (error) {
     res.status(401).json(error);
@@ -75,7 +74,7 @@ exports.fetchAllOrders = async (req, res) => {
   }
 
   const totalDocs = await totalOrderQuery.count().exec();
-  console.log({ totalDocs });
+
 
   if (req.query._page && req.query._limit) {
     const pageSize = req.query._limit;

@@ -25,7 +25,7 @@ export const FetchProductAsync = createAsyncThunk(
 export const CreateProductAsync = createAsyncThunk(
   "product/AddProduct",
   async (product) => {
-    console.log(product,"product")
+    console.log(product, "product");
 
     const response = await CreateProduct(product);
     return response;
@@ -33,16 +33,17 @@ export const CreateProductAsync = createAsyncThunk(
 );
 export const FilterProductAsync = createAsyncThunk(
   "product/FilterProduct",
-  async ({ filter, sort, pagination, id }) => {
-    console.log(filter, sort, "filter");
-    if (filter || sort) {
-      const response = await FilterProduct(filter, sort, pagination, id);
+  async ({ filter, sort, pagination, search_qurey,token, id }) => {
+    const response = await FilterProduct(
+      filter,
+      sort,
+      pagination,
+      search_qurey,
+      token,
+      id
+    );
 
-      return response;
-    } else {
-      const response = await FetchProduct();
-      return response;
-    }
+    return response;
   }
 );
 

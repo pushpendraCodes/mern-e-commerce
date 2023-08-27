@@ -37,7 +37,7 @@ exports.loginUser = async (req, res) => {
 
       let verify_pass = await bcrypt.compare(req.body.password, user.password);
       !verify_pass && res.status(203).json("invalid credentials");
-      console.log(verify_pass, "verify_pass");
+
       res.status(200).json({
         user: user.id,
         token: token,
@@ -56,7 +56,7 @@ exports.loginUser = async (req, res) => {
 
 exports.resetPasswordRequest = async (req, res) => {
   const email = req.body.email;
-console.log(email,"email")
+
   const user = await User.findOne({ email: email });
   if (user) {
     const token = crypto.randomBytes(48).toString("hex");
@@ -73,6 +73,7 @@ console.log(email,"email")
 
     if (email) {
       const response = await sendMail({ to: email, subject, html });
+      console.log(response,"response")
       res.json(response);
     } else {
       res.sendStatus(400);
@@ -90,7 +91,7 @@ exports.resetPassword = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
    user.password = hashedPassword;
-    console.log(user,"user")
+
     await user.save();
 
     const subject = "password successfully reset for e-commerce";

@@ -33,8 +33,9 @@ export function CreateProduct(product) {
   });
 }
 
-export function FilterProduct(filter, sort, pagination) {
+export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   let queryString = "";
+  console.log(search_qurey,"search_qurey")
 
   // filter
   // http://localhost:4000/products?category=smartphones
@@ -54,6 +55,12 @@ export function FilterProduct(filter, sort, pagination) {
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
+  for (let key in search_qurey) {
+    if(search_qurey.search){
+      queryString += `${key}=${search_qurey[key]}&`;
+    }
+
+  }
 
   // pagination
   // http://localhost:4000/products?_limit=10&_page=3
@@ -68,7 +75,7 @@ export function FilterProduct(filter, sort, pagination) {
     {
       headers: {
         "Content-Type": "application/json",
-        authorization:user.token ,
+        authorization:token ,
       },
     }
     );

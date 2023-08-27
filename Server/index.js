@@ -23,51 +23,51 @@ const CartRouter = require("./routes/Cart");
 
 
 const { Order } = require("./models/Order");
-const { Product } = require("./models/Product");
 
-// app.post(
-//   "/webhook",
-//   express.raw({ type: "application/json" }),
-//   async (request, response) => {
-//     const sig = request.headers["stripe-signature"];
 
-//     let event;
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  async (request, response) => {
+    const sig = request.headers["stripe-signature"];
 
-//     try {
-//       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-//     } catch (err) {
-//       response.status(400).send(`Webhook Error: ${err.message}`);
-//       return;
-//     }
+    let event;
 
-//     // Handle the event
-//     switch (event.type) {
-//       case "payment_intent.succeeded":
-//         const paymentIntentSucceeded = event.data.object;
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
 
-//         const order = await Order.findById(
-//           paymentIntentSucceeded.metadata.orderId
-//         );
-//         order.paymentStatus = "received";
-//         await order.save();
+    // Handle the event
+    switch (event.type) {
+      case "payment_intent.succeeded":
+        const paymentIntentSucceeded = event.data.object;
 
-//         break;
-//       // ... handle other event types
-//       default:
-//         console.log(`Unhandled event type ${event.type}`);
-//     }
+        const order = await Order.findById(
+          paymentIntentSucceeded.metadata.orderId
+        );
+        order.paymentStatus = "received";
+        await order.save();
 
-//     // Return a 200 response to acknowledge receipt of the event
-//     response.send();
-//   }
-// );
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+  }
+);
 
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello node js You are superb");
 });
 
-app.use("/products", checkauth, ProductRouter.router);
+app.use("/products",checkauth, ProductRouter.router);
 app.use("/user",checkauth, UserRouter.router);
 app.use("/auth", AuthRouter.router);
 app.use("/order",checkauth, OrderRouter.router);

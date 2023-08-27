@@ -17,7 +17,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { price_Calc } from "../../../app/Costant";
 import Loader from "../../common/Loader";
-
+import { SelectedLoggedUser } from "../../Auth/AuthSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -31,12 +31,11 @@ export function ProductList() {
 
   const products = useSelector(SelectAllProduct);
   const status = useSelector(productStatus);
+  let user = useSelector(SelectedLoggedUser)
 
   const itemPerPage = useSelector((state) => state.product.itemPerPage);
   const totalItems = useSelector((state) => state.product.totalproduct);
   console.log(products, "products");
-
-
 
   // filter handelchnage
   const [filter, setfilter] = useState({});
@@ -72,22 +71,28 @@ export function ProductList() {
   };
 
   const [page, setpage] = useState(1);
+  const [searchQuery, setSearch] = useState();
   // handelPagination
   const handelpagination = (page) => {
     console.log(page);
     setpage(page);
   };
 
+  const handelSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   useEffect(() => {
     let pagination = { _limit: itemPerPage, _page: page };
-    dispatch(FilterProductAsync({ filter, sort, pagination }));
-  }, [dispatch, filter, sort, page]);
+    let search_qurey = { search: searchQuery };
+
+    let token = user.token
+    dispatch(FilterProductAsync({ filter, sort, pagination, search_qurey,token }));
+  }, [dispatch, filter, sort, page, searchQuery]);
 
   useEffect(() => {
     setpage(1);
   }, [filter, totalItems, sort]);
-
-
 
   // prev button
   const handelnext = () => {
@@ -451,13 +456,10 @@ export function ProductList() {
                   <input
                     type="search"
                     id="default-search"
-                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg focus:border-white"
+                    class="block w-52 p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg focus:border-white"
                     placeholder="Search "
-
-
-
+                    onChange={handelSearch}
                   />
-
                 </div>
               </form>
 
@@ -545,9 +547,11 @@ export function ProductList() {
                   {/* product List start here */}
                   <div className="bg-white">
                     <div className="mx-auto max-w-2xl px-4 py-5 sm:px-6 sm:py-5 lg:max-w-7xl lg:px-8">
-                    {
-                      status==="loading"?<Loader  loaderColor="black" textColor="black" />:  <ProductGrid products={products} />
-                    }
+                      {status === "loading" ? (
+                        <Loader loaderColor="black" textColor="black" />
+                      ) : (
+                        <ProductGrid products={products} />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -776,12 +780,10 @@ const ProductGrid = ({ products }) => {
             </div>
 
             <p className="text-sm font-medium line-through text-gray-400">
-                ${product.price}
-
+              ${product.price}
             </p>
             <p className="text-sm mx-2 font-medium text-gray-900">
-
-              ₹{price_Calc(product.price ,product.discountPercentage)}
+              ₹{price_Calc(product.price, product.discountPercentage)}
             </p>
           </div>
         </div>
@@ -789,5 +791,3 @@ const ProductGrid = ({ products }) => {
     </div>
   );
 };
-
-

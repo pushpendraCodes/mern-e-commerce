@@ -2,7 +2,7 @@ const { Cart } = require('../models/Cart');
 
 exports.fetchCartByUser = async (req, res) => {
   const { id } = req.params
-  console.log(id)
+
   try {
     const cartItems = await Cart.find({ user: id }).populate('product');
     res.status(200).json(cartItems);
