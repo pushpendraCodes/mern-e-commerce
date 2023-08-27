@@ -3,7 +3,7 @@
 let user = JSON.parse(localStorage.getItem("user"))
 export function AddToCart(item) {
   return new Promise(async (resolve, reject) => {
-    let response = await fetch("http://localhost:4000/cart", {
+    let response = await fetch("https://mern-e-commerce-blond.vercel.app/cart", {
       method: "POST",
       body: JSON.stringify(item),
       headers: { "content-type": "application/json",
@@ -22,7 +22,7 @@ export function AddToCart(item) {
 export function getUserCart(user_id) {
   return new Promise(async (resolve) => {
     console.log(user_id);
-    let response = await fetch("http://localhost:4000/cart/" + user_id,
+    let response = await fetch("https://mern-e-commerce-blond.vercel.app/cart/" + user_id,
     {
       headers: { "content-type": "application/json",
       authorization:user.token , },
@@ -36,7 +36,7 @@ export function getUserCart(user_id) {
 }
 export function removeProduct(productId) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/cart/" + productId, {
+    const response = await fetch("https://mern-e-commerce-blond.vercel.app/cart/" + productId, {
       method: "DELETE",
       body: JSON.stringify({ id: productId }),
       headers: { "content-type": "application/json" ,
@@ -50,7 +50,7 @@ export function removeProduct(productId) {
 export function handelqunatity(value) {
   return new Promise(async (resolve) => {
 
-    const response = await fetch("http://localhost:4000/cart/" + value.id, {
+    const response = await fetch("https://mern-e-commerce-blond.vercel.app/cart/" + value.id, {
       method: "PATCH",
       body: JSON.stringify(value),
       headers: { "content-type": "application/json",

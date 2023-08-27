@@ -3,7 +3,7 @@ let user = JSON.parse(localStorage.getItem("user"))
 export function CreateOrder(order) {
     return new Promise(async (resolve) => {
 
-      let response = await fetch("http://localhost:4000/order", {
+      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order", {
         method: "POST",
         body: JSON.stringify(order),
         headers: { "content-type": "application/json",
@@ -23,7 +23,7 @@ export function CreateOrder(order) {
 export function updateOrder(order) {
     return new Promise(async (resolve) => {
 
-      let response = await fetch("http://localhost:4000/order/"+order.id, {
+      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order/"+order.id, {
         method: "PATCH",
         body: JSON.stringify(order),
         headers: { "content-type": "application/json",
@@ -52,7 +52,7 @@ export function updateOrder(order) {
 
     console.log(queryString);
     return new Promise(async (resolve) => {
-      let response = await fetch("http://localhost:4000/order?"+queryString);
+      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order?"+queryString);
       let data = await response.json();
       const totalItems = await response.headers.get("X-Total-Count");
       resolve({ data: data, totalOrders: totalItems });
