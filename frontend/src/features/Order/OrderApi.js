@@ -1,13 +1,13 @@
-let user = JSON.parse(localStorage.getItem("user"))
+// let user = JSON.parse(localStorage.getItem("user"))
 // create order
-export function CreateOrder(order) {
+export function CreateOrder(order,token) {
     return new Promise(async (resolve) => {
 
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order", {
+      let response = await fetch("http://localhost:4000/order", {
         method: "POST",
         body: JSON.stringify(order),
         headers: { "content-type": "application/json",
-        authorization:user.token , },
+        authorization:token },
       });
 
       let data = await response.json();
@@ -20,14 +20,14 @@ export function CreateOrder(order) {
 
 
   // update order
-export function updateOrder(order) {
+export function updateOrder(order,token) {
     return new Promise(async (resolve) => {
 
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order/"+order.id, {
+      let response = await fetch("http://localhost:4000/order/"+order.id, {
         method: "PATCH",
         body: JSON.stringify(order),
         headers: { "content-type": "application/json",
-        authorization:user.token , },
+        authorization:token , },
       });
 
       let data = await response.json();
@@ -37,7 +37,7 @@ export function updateOrder(order) {
   }
 
   // fetch total orders with filter & sort for admin
-  export function fetchTotalOrders(pagination,sort ,search_query) {
+  export function fetchTotalOrders(pagination,sort ,search_query,token) {
     let queryString =""
     console.log(pagination,sort);
     for (let key in pagination) {
@@ -52,7 +52,11 @@ export function updateOrder(order) {
 
     console.log(queryString);
     return new Promise(async (resolve) => {
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order?"+queryString);
+      let response = await fetch("http://localhost:4000/order?"+queryString,
+      {
+        headers: { "content-type": "application/json",
+        authorization:token },
+      });
       let data = await response.json();
       const totalItems = await response.headers.get("X-Total-Count");
       resolve({ data: data, totalOrders: totalItems });

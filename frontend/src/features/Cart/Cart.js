@@ -33,11 +33,13 @@ export default function Cart() {
 
   const removeProduct = (e, productId) => {
     e.preventDefault();
-    dispatch(removeProductAsync(productId));
+    let user = JSON.parse(localStorage.getItem("user"))
+    dispatch(removeProductAsync({productId,token:user.token}));
   };
   const handelQuantity = (e, id) => {
     console.log(e.target.value);
-    dispatch(handelQuantityAsync({ quantity: +e.target.value, id: id  }));
+    let user = JSON.parse(localStorage.getItem("user"))
+    dispatch(handelQuantityAsync({ quantity: +e.target.value, id: id ,token:user.token }));
   };
 
   return (

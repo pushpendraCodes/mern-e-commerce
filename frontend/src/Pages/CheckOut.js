@@ -21,6 +21,7 @@ export function Checkout() {
   let status = useSelector(ordersStatus);
 
   const dispatch = useDispatch();
+
   let navigate = useNavigate();
   const user = useSelector(logged_user_details);
   console.log(user, "user");
@@ -75,11 +76,13 @@ export function Checkout() {
 
   const removeProduct = (e, productId) => {
     e.preventDefault();
-    dispatch(removeProductAsync(productId));
+    let user = JSON.parse(localStorage.getItem("user"))
+    dispatch(removeProductAsync({productId,token:user.token}));
+
   };
   const handelQuantity = (e, id) => {
-    console.log(e.target.value);
-    dispatch(handelQuantityAsync({ quantity: +e.target.value, id: id }));
+    let user = JSON.parse(localStorage.getItem("user"))
+    dispatch(handelQuantityAsync({ quantity: +e.target.value, id: id ,token:user.token }));
   };
 
   const CurrentOrder = useSelector(currentOrder);
@@ -94,8 +97,8 @@ export function Checkout() {
         selectedAddress: selectedAds,
         status: "pending",
       };
-
-      dispatch(CreateOrderAsync(order));
+      let {token} = JSON.parse(localStorage.getItem("user"))
+      dispatch(CreateOrderAsync({order,token}));
     } else {
       alert("please choose address & payment mode");
     }

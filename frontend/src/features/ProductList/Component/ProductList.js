@@ -85,7 +85,6 @@ export function ProductList() {
   useEffect(() => {
     let pagination = { _limit: itemPerPage, _page: page };
     let search_qurey = { search: searchQuery };
-
     let token = user.token
     dispatch(FilterProductAsync({ filter, sort, pagination, search_qurey,token }));
   }, [dispatch, filter, sort, page, searchQuery]);

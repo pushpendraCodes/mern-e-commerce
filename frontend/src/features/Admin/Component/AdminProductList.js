@@ -22,6 +22,7 @@ import {
   StarIcon,
 } from "@heroicons/react/20/solid";
 import { price_Calc } from "../../../app/Costant";
+import { SelectedLoggedUser } from "../../Auth/AuthSlice";
 
 const subCategories = [
   { name: "Totes", href: "#" },
@@ -42,6 +43,7 @@ export function AdminProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const products = useSelector(SelectAllProduct);
+  const user = useSelector(SelectedLoggedUser)
   const itemPerPage = useSelector((state) => state.product.itemPerPage);
   const totalItems = useSelector((state) => state.product.totalproduct);
   console.log(products, "products");
@@ -86,9 +88,11 @@ export function AdminProductList() {
     setpage(page);
   };
 
+
   useEffect(() => {
     let pagination = { _limit: itemPerPage, _page: page };
-    dispatch(FilterProductAsync({ filter, sort, pagination }));
+    let token = user.token
+    dispatch(FilterProductAsync({ filter, sort, pagination ,token }));
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
@@ -731,7 +735,7 @@ const ProductGrid = ({ products }) => {
   let navigate = useNavigate();
   return (
     <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-      {products.map((product) => (
+      {products?.map((product) => (
         <>
           <div key={product.id} className="">
             <Link to={`/product-details/${product.id}`}>

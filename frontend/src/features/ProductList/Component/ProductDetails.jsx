@@ -42,7 +42,8 @@ export default function ProductDetails() {
   console.log(id);
 
   useEffect(() => {
-    dispatch(selectedProductAsync(id));
+    let user = JSON.parse(localStorage.getItem("user"))
+    dispatch(selectedProductAsync({id,token:user.token}));
   }, [id, dispatch]);
 
   const product = useSelector(SelectedProduct);
@@ -126,7 +127,7 @@ export default function ProductDetails() {
 
   const addCart = (e) => {
     e.preventDefault();
-
+    let user = JSON.parse(localStorage.getItem("user"))
     if  ( Cart?.findIndex((item) => item.product.id === product.id) < 0) {
 
       const newItem = {
@@ -141,7 +142,7 @@ export default function ProductDetails() {
         newItem.size = selectedSize;
       }
       console.log(newItem)
-      dispatch(addToCartAsync({ item: newItem, alert }));
+      dispatch(addToCartAsync({ item: newItem, alert ,token:user.token}));
     } else {
       alert.error("Item Already added");
     }

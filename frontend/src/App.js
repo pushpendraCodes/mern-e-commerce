@@ -57,8 +57,8 @@ export default function App() {
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchLoggedInUserAsync(user.user));
-      dispatch(getUserCartAsync(user.user));
+      dispatch(fetchLoggedInUserAsync(user));
+      dispatch(getUserCartAsync(user));
     }
   }, [dispatch, user]);
 

@@ -44,8 +44,9 @@ export default function ProductForm() {
   useEffect(() => {
     if (param.id) {
       console.log(param.id);
+      let user = JSON.parse(localStorage.getItem("user"))
+      dispatch(selectedProductAsync({id:param.id,token:user.token}));
 
-      dispatch(selectedProductAsync(param.id));
     }
   }, [param.id]);
 
@@ -79,16 +80,16 @@ export default function ProductForm() {
     product.rating = 4.5;
     product.discountPercentage = +product.discountPercentage;
     console.log(product, "product");
-
+    let user = JSON.parse(localStorage.getItem("user"))
     if (param.id) {
       product.id = param.id;
       product.rating = selectedproduct.rating || 0;
-      dispatch(updateProductAsync(product));
+      dispatch(updateProductAsync({product,token:user.token}));
       reset();
       alert.success("product updated");
       //TODO: on product successfully added clear fields and show a message
     } else {
-      dispatch(CreateProductAsync(product));
+      dispatch(CreateProductAsync({product,token:user.token}));
       reset();
       alert.success("product created");
     }

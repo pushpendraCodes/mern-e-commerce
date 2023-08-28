@@ -9,7 +9,8 @@ import { FetchProductAsync } from '../features/ProductList/ProductListSlice'
 const AdminPage = () => {
 let dispatch = useDispatch()
   useEffect(()=>{
-    dispatch(FetchProductAsync())
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    dispatch(FetchProductAsync(token))
       },[])
   return (
     <>

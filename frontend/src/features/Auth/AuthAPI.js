@@ -5,7 +5,7 @@
 export function CreateUser(userInfo) {
   return new Promise(async (resolve,reject) => {
     console.log(userInfo);
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/auth", {
+    let response = await fetch("http://localhost:4000/auth", {
       method: "POST",
       body: JSON.stringify(userInfo),
       headers: { "content-type": "application/json" },
@@ -28,7 +28,7 @@ export function CreateUser(userInfo) {
 export function loginUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch('https://mern-e-commerce-blond.vercel.app/auth/login', {
+      const response = await fetch('http://localhost:4000/auth/login', {
         method: 'POST',
         body: JSON.stringify(loginInfo),
         headers: { 'content-type': 'application/json' },
@@ -51,7 +51,7 @@ export function loginUser(loginInfo) {
 export function resetPasswordRequest(email) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch('https://mern-e-commerce-blond.vercel.app/auth/resetPasswordRequest', {
+      const response = await fetch('http://localhost:4000/auth/resetPasswordRequest', {
         method: 'POST',
         body: JSON.stringify({email}),
         headers: { 'content-type': 'application/json' },
@@ -74,7 +74,7 @@ export function resetPasswordRequest(email) {
 export function resetPassword(data) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch('https://mern-e-commerce-blond.vercel.app/auth/reset-password', {
+      const response = await fetch('http://localhost:4000/auth/reset-password', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'content-type': 'application/json' },

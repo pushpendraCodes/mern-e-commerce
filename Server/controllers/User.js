@@ -4,7 +4,7 @@ exports.fetchUserByUserId = async (req, res) => {
   const { id } = req.params;
 
   try {
-    console.log(id);
+    // console.log(id);
     let user = await User.findById(id);
 
     res.status(200).json(user);

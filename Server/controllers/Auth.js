@@ -73,7 +73,7 @@ exports.resetPasswordRequest = async (req, res) => {
 
     if (email) {
       const response = await sendMail({ to: email, subject, html });
-      console.log(response,"response")
+      // console.log(response,"response")
       res.json(response);
     } else {
       res.sendStatus(400);

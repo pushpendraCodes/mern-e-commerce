@@ -8,6 +8,7 @@ const stripe = require('stripe')('sk_test_51NivbySHnCqcpMx1mMbXSPvau9M6fvjxzWC6S
 exports.CreateOrder = async (req, res) => {
   const order = new Order(req.body);
   // here we have to update stocks;
+  console.log(req.body,"req.body")
 
   for (let item of order.items) {
     let product = await Product.findOne({ _id: item.product.id });
@@ -19,10 +20,11 @@ exports.CreateOrder = async (req, res) => {
     let doc = await order.save();
     const user = await User.findById(order.user)
     // we can use await for this also
-     sendMail({to:user.email,html:invoiceTemplate(order),subject:'Order Received' })
+    await sendMail({to:user.email,html:invoiceTemplate(order),subject:'Order Received' })
     res.status(201).json(doc);
   } catch (error) {
     res.status(401).json(error);
+    console.log(error,"error")
   }
 };
 
@@ -69,7 +71,8 @@ exports.fetchAllOrders = async (req, res) => {
   }
 
   if (req.query.search_query) {
-    console.log(req.query.search_query, "req.query.search_query");
+    // console.log(req.query.search_query, "req.query.search_query");
+
     query = query.find(req.query.search_query);
   }
 
@@ -100,7 +103,7 @@ exports.fetchOrdersByUser = async (req, res) => {
   let totalOrderQuery = Order.find({user:req.body.id});
 
   const totalDocs = await totalOrderQuery.count().exec();
-  console.log({ totalDocs });
+  // console.log({ totalDocs });
 
   if (req.query._page && req.query._limit) {
     const pageSize = req.query._limit;
@@ -110,7 +113,7 @@ exports.fetchOrdersByUser = async (req, res) => {
 
   try {
     const docs = await query.exec();
-    console.log(docs,"query")
+    // console.log(docs,"query")
     res.set("X-Total-Count", totalDocs);
     res.status(200).json(docs);
   } catch (err) {

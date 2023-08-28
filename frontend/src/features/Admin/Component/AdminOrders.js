@@ -34,13 +34,15 @@ const AdminOrders = () => {
 
   const handleOrderStatus = (e, order) => {
     const updatedOrder = { ...order, status: e.target.value };
-    dispatch(updateOrderAsync(updatedOrder));
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    dispatch(updateOrderAsync({order:updatedOrder,token}));
     setEditableOrderId(-1);
   };
 
   const handleOrderPaymentStatus = (e, order) => {
     const updatedOrder = { ...order, paymentStatus: e.target.value };
-    dispatch(updateOrderAsync(updatedOrder));
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    dispatch(updateOrderAsync({order:updatedOrder,token}));
     setEditableOrderId(-1);
   };
 
@@ -93,7 +95,8 @@ const AdminOrders = () => {
 
   useEffect(() => {
     let pagination = { _limit: itemPerPage, _page: page };
-    dispatch(fetchTotalOrdersAsync({ pagination, sort }));
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    dispatch(fetchTotalOrdersAsync({ pagination, sort,token }));
   }, [page, dispatch, editableOrderId, sort]);
 
   return (
@@ -192,7 +195,7 @@ const AdminOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
-                  {orders.map((order) => (
+                  {orders?.map((order) => (
                     <tr
                       key={order.id}
                       className="border-b border-gray-200 hover:bg-gray-100"

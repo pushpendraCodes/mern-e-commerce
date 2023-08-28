@@ -16,24 +16,24 @@ const initialState = {
 
 export const FetchProductAsync = createAsyncThunk(
   "product/FetchProduct",
-  async () => {
-    const response = await FetchProduct();
+  async (token) => {
+    const response = await FetchProduct(token);
 
     return response;
   }
 );
 export const CreateProductAsync = createAsyncThunk(
   "product/AddProduct",
-  async (product) => {
+  async ({ product, token }) => {
     console.log(product, "product");
 
-    const response = await CreateProduct(product);
+    const response = await CreateProduct(product, token);
     return response;
   }
 );
 export const FilterProductAsync = createAsyncThunk(
   "product/FilterProduct",
-  async ({ filter, sort, pagination, search_qurey,token, id }) => {
+  async ({ filter, sort, pagination, search_qurey, token, id }) => {
     const response = await FilterProduct(
       filter,
       sort,
@@ -49,18 +49,20 @@ export const FilterProductAsync = createAsyncThunk(
 
 export const selectedProductAsync = createAsyncThunk(
   "product/product/:id",
-  async (id) => {
-    let response = await selectedProduct(id);
+  async ({ id, token }) => {
+    let response = await selectedProduct(id, token);
     return response;
   }
 );
 export const updateProductAsync = createAsyncThunk(
   "product/update/:id",
-  async (product) => {
-    let response = await updateProduct(product);
+  async ({ product, token }) => {
+    let response = await updateProduct(product, token);
     return response;
   }
 );
+
+
 
 export const ProductList = createSlice({
   name: "product",
@@ -104,6 +106,7 @@ export const ProductList = createSlice({
 
         state.allProducts = action.payload;
       })
+
       .addCase(FilterProductAsync.pending, (state) => {
         state.status = "loading";
       })

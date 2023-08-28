@@ -10,10 +10,10 @@ const initialState = {
 
 export const CreateOrderAsync = createAsyncThunk(
   "order/add",
-  async (item, { rejectWithValue }) => {
+  async ({order,token}, { rejectWithValue }) => {
     try {
-      console.log(item);
-      const response = await  CreateOrder(item);
+      // console.log(item);
+      const response = await  CreateOrder(order,token);
       return response.data;
     } catch (error) {
       rejectWithValue(error);
@@ -24,16 +24,16 @@ export const CreateOrderAsync = createAsyncThunk(
 
 export const fetchTotalOrdersAsync = createAsyncThunk(
   "order/Fetchorders",
-  async ({pagination,sort,search_query}) => {
-    const response = await fetchTotalOrders(pagination,sort,search_query);
+  async ({pagination,sort,search_query,token}) => {
+    const response = await fetchTotalOrders(pagination,sort,search_query,token);
     return response;
 
   }
 );
 export const updateOrderAsync = createAsyncThunk(
   "order/updateorder",
-  async (order) => {
-    const response = await updateOrder(order);
+  async ({order,token}) => {
+    const response = await updateOrder(order,token);
     return response;
 
   }

@@ -1,14 +1,14 @@
 // A mock function to mimic making an async request for data
 
-let user = JSON.parse(localStorage.getItem("user"))
-export function FetchProduct() {
+// let user = JSON.parse(localStorage.getItem("user"))
+export function FetchProduct(token) {
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products",
+    let response = await fetch("http://localhost:4000/products",
 
     {
       headers: {
         "Content-Type": "application/json",
-        authorization:user.token ,
+        authorization:token ,
       },
     }
     );
@@ -19,12 +19,14 @@ export function FetchProduct() {
 }
 
 // add product
-export function CreateProduct(product) {
+export function CreateProduct(product,token) {
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products", {
+    let response = await fetch("http://localhost:4000/products", {
       method: "POST",
       body: JSON.stringify(product),
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json",
+      authorization:token ,
+    },
     });
 
     let data = await response.json();
@@ -38,8 +40,8 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   console.log(search_qurey,"search_qurey")
 
   // filter
-  // https://mern-e-commerce-blond.vercel.app/products?category=smartphones
-  // https://mern-e-commerce-blond.vercel.app/products?brand=apple
+  // http://localhost:4000 /products?category=smartphones
+  // http://localhost:4000 /products?brand=apple
 
   for (let key in filter) {
     let categoryValues = filter[key];
@@ -50,8 +52,8 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   }
 
   // sort
-  // https://mern-e-commerce-blond.vercel.app/products?_sort=asc&
-  // https://mern-e-commerce-blond.vercel.app/products?_sort=desc&
+  // http://localhost:4000 /products?_sort=asc&
+  // http://localhost:4000 /products?_sort=desc&
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
@@ -63,7 +65,7 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   }
 
   // pagination
-  // https://mern-e-commerce-blond.vercel.app/products?_limit=10&_page=3
+  // http://localhost:4000 /products?_limit=10&_page=3
 
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
@@ -71,7 +73,7 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
 
   console.log(queryString, "queryString");
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products?" + queryString,
+    let response = await fetch("http://localhost:4000/products?" + queryString,
     {
       headers: {
         "Content-Type": "application/json",
@@ -86,15 +88,15 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   });
 }
 
-export function selectedProduct(id) {
-  console.log(id);
+export function selectedProduct(id,token) {
+  console.log(token);
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products/" + id,
+    let response = await fetch("http://localhost:4000/products/" + id,
 
     {
       headers: {
         "Content-Type": "application/json",
-        authorization:user.token ,
+        authorization:token ,
       },
     }
     );
@@ -105,13 +107,13 @@ export function selectedProduct(id) {
 }
 // edit product
 
-export function updateProduct(product) {
+export function updateProduct(product,token) {
   return new Promise(async (resolve) => {
-    let response = await fetch(`https://mern-e-commerce-blond.vercel.app/products/` + product.id, {
+    let response = await fetch(`http://localhost:4000/products/` + product.id, {
       method: "PATCH",
       body: JSON.stringify(product),
       headers: { "content-type": "application/json",
-      authorization:user.token ,
+      authorization:token ,
 
     },
     });

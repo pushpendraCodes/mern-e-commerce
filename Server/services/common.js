@@ -149,7 +149,7 @@ exports.invoiceTemplate = function (order) {
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="https://sendgrid.com" target="_blank" style="display: inline-block;">
-                <img style="width:150px;height:100px" src="https://webmallkart.com/image/images/8S9xr6kAkNiZy3Gj3T4WZjrn9hUANWKE78YPYVxa.jpg?p=logo" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+                <h1 style="text-align:center" >Apna Cart</h1/>
               </a>
             </td>
           </tr>
@@ -278,12 +278,12 @@ exports.invoiceTemplate = function (order) {
                   <tr>
                     <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
                       <p><strong>Delivery Address</strong></p>
-                      <p>${order.selectedAddress[0].firstName} ${
-    order.selectedAddress[0].lastName
-  }<br>${order.selectedAddress[0].street}<br>${order.selectedAddress[0].city},${
-    order.selectedAddress[0].region
-  },${order.selectedAddress[0].postal}</p>
-                      <p>${order.selectedAddress[0].phone}</p>
+                      <p>${order.selectedAddress.firstName} ${
+    order.selectedAddress.lastName
+  }<br>${order.selectedAddress.street}<br>${order.selectedAddress.city},${
+    order.selectedAddress.region
+  },${order.selectedAddress.postal}</p>
+                      <p>${order.selectedAddress.phone}</p>
 
                       </td>
                   </tr>
