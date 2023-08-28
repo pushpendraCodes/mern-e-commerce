@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const path = require('path');
 const http = require("http");
 const port = process.env.PORT || 4000;
 const mongoose = require("mongoose");
@@ -24,7 +24,7 @@ const CartRouter = require("./routes/Cart");
 
 const { Order } = require("./models/Order");
 
-
+app.use(express.static(path.resolve(__dirname, 'build')));
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
