@@ -2,15 +2,15 @@
 let user = JSON.parse(localStorage.getItem("user"))
 export function CreateUser(userData) {
   return new Promise(async (resolve) => {
-    console.log(userData);
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app /users", {
+    // console.log(userData);
+    let response = await fetch("https://apnacart.vercel.app /users", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
     });
 
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
     resolve({data});
   });
 }
@@ -21,9 +21,9 @@ export function loginUser(userData) {
     let email = userData.email;
     let pass = userData.password;
 
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app /users?email=" + email);
+    let response = await fetch("https://apnacart.vercel.app /users?email=" + email);
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
     if (data.length) {
       if (pass===data[0].password  ) {
         resolve({data:data[0]} );
@@ -39,15 +39,15 @@ export function loginUser(userData) {
 }
 export function UpdateUser(update) {
   return new Promise(async (resolve) => {
-console.log(update)
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app /users/"+update.id, {
+// console.log(update)
+    let response = await fetch("https://apnacart.vercel.app /users/"+update.id, {
       method: "PATCH",
       body: JSON.stringify(update),
       headers: { "content-type": "application/json" },
     });
 
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
     resolve({data});
     localStorage.setItem('user',JSON.stringify(data))
   });

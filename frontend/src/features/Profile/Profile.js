@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { SelectedLoggedUser } from "../Auth/AuthSlice";
 import { UpdateUserAsync, logged_user_details } from "../user/userSlice";
 import { useAlert } from "react-alert";
@@ -23,7 +23,7 @@ let alert = useAlert()
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     const newuser = { ...user, addresses: [...user.addresses] };
     newuser.addresses.splice(selctedEditIndex, 1, data);
     dispatch(UpdateUserAsync(newuser));
@@ -37,8 +37,10 @@ let alert = useAlert()
     setshowAddForm(true);
   };
   const addSubmit = (data) => {
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    let newAds = {...user ,addresses:[...user.addresses,data]}
     dispatch(
-      UpdateUserAsync({ ...user, addresses: [...user.addresses, data] })
+      UpdateUserAsync({newAds,token })
     );
     reset();
     setshowAddForm(false);
@@ -66,9 +68,10 @@ let alert = useAlert()
 
 
   const handelRemove = (index) => {
+    let {token} = JSON.parse(localStorage.getItem("user"))
     let newAds = {...user ,addresses:[...user.addresses]}
     newAds.addresses.splice(index ,1 )
-    dispatch(UpdateUserAsync(newAds))
+    dispatch(UpdateUserAsync({newAds,token}))
     alert.success("address removed ")
 
   };

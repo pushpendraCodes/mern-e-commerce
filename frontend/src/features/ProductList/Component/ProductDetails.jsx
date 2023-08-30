@@ -39,7 +39,7 @@ export default function ProductDetails() {
   const dispatch = useDispatch();
   const param = useParams();
   let { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"))
@@ -47,7 +47,7 @@ export default function ProductDetails() {
   }, [id, dispatch]);
 
   const product = useSelector(SelectedProduct);
-  console.log(product, "products");
+  // console.log(product, "products");
 
   //   name: "Basic Tee 6-Pack",
   //   price: "$192",
@@ -121,7 +121,7 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState();
   const user = useSelector(SelectedLoggedUser);
   const Cart = useSelector(cart);
-  console.log(user);
+  // console.log(user);
   let navigate = useNavigate();
   let alert = useAlert();
 
@@ -141,7 +141,7 @@ export default function ProductDetails() {
       if (selectedSize) {
         newItem.size = selectedSize;
       }
-      console.log(newItem)
+      // console.log(newItem)
       dispatch(addToCartAsync({ item: newItem, alert ,token:user.token}));
     } else {
       alert.error("Item Already added");

@@ -26,7 +26,7 @@ export function Login() {
   let status = useSelector(AuthStatus);
 
   let AuthErrore = useSelector(errore);
-  console.log(AuthErrore);
+  // console.log(AuthErrore);
   let navigate = useNavigate();
 
   const onSubmit = (data) => {

@@ -5,13 +5,12 @@ import {
 
   orderStatus,
 
-  paginationOrdersIdAsync,
+
   totalOrders,
   userOrders,
 } from "./userSlice";
 import { SelectedLoggedUser, } from "../Auth/AuthSlice";
 import { Link } from "react-router-dom";
-
 import { price_Calc } from "../../app/Costant";
 import Pagination from "../common/Pagination";
 import { itemPerPage } from "../../app/Costant";
@@ -52,8 +51,9 @@ const UserOrders = () => {
   };
 
   useEffect(() => {
+    // let {token} = JSON.parse(localStorage.getItem("user"))
     let pagination = { _limit: itemPerPage, _page: page };
-    dispatch(fetchOrdersByUserIdAsync({pagination:pagination,id:user.user}));
+    dispatch(fetchOrdersByUserIdAsync({pagination:pagination,id:user.user,token:user.token}));
   }, [dispatch, page]);
 
   return (

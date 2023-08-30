@@ -15,7 +15,7 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   let Cart = useSelector(cart);
-  console.log(Cart);
+  // console.log(Cart);
 
   let user = useSelector(logged_user_details)
   let status = useSelector(cartStatus)
@@ -37,7 +37,7 @@ export default function Cart() {
     dispatch(removeProductAsync({productId,token:user.token}));
   };
   const handelQuantity = (e, id) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let user = JSON.parse(localStorage.getItem("user"))
     dispatch(handelQuantityAsync({ quantity: +e.target.value, id: id ,token:user.token }));
   };

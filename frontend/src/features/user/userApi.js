@@ -1,11 +1,11 @@
 
-let user = JSON.parse(localStorage.getItem("user"))
+// let user = JSON.parse(localStorage.getItem("user"))
 
 
   export function fetchLoggedInUser(user) {
     return new Promise(async (resolve) =>{
-      console.log(user.user,"sjbdu")
-      const response = await fetch('https://mern-e-commerce-blond.vercel.app/user/'+user.user,
+      // console.log(user.user,"sjbdu")
+      const response = await fetch('https://apnacart.vercel.app/user/'+user.user,
       {
         headers: {
           "Content-Type": "application/json",
@@ -20,20 +20,20 @@ let user = JSON.parse(localStorage.getItem("user"))
     }
     );
   }
-  export function fetchOrdersByUserId( pagination,id) {
+  export function fetchOrdersByUserId( pagination,id,token) {
     let queryString = "";
-    console.log(pagination)
+    // console.log(pagination)
     for (let key in pagination) {
       queryString += `${key}=${pagination[key]}&`;
     }
-    console.log(queryString, "queryString");
+    // console.log(queryString, "queryString");
     return new Promise(async (resolve) => {
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order/user?" + queryString,
+      let response = await fetch("https://apnacart.vercel.app/order/user?" + queryString,
       {
         method: "POST",
         body: JSON.stringify({id:id}),
         headers: { "content-type": "application/json",
-        authorization:user.token ,
+        authorization:token ,
 
       },
       }
@@ -41,23 +41,23 @@ let user = JSON.parse(localStorage.getItem("user"))
       let data = await response.json();
       const totalItems = await response.headers.get("X-Total-Count");
       resolve({ data: data, totalOrders: totalItems });
-      console.log(data);
+      // console.log(data);
     });
   }
 
 
-  export function UpdateUser(info) {
+  export function UpdateUser(newAds,token) {
     return new Promise(async (resolve) => {
-  // console.log(update)
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/user/"+info.id, {
+  console.log(newAds,"newAds")
+      let response = await fetch("https://apnacart.vercel.app/user/"+newAds.id, {
         method: "PATCH",
-        body: JSON.stringify(info),
+        body: JSON.stringify(newAds),
         headers: { "content-type": "application/json" ,
-        authorization:user.token ,},
+        authorization:token ,},
       });
 
       let data = await response.json();
-      console.log(data);
+      // console.log(data);
       resolve({data});
 
     });

@@ -44,11 +44,12 @@ import StripeCheckout from "./Pages/StripeCheckout";
 import CheckoutForm from "./Pages/CheckoutForm";
 import About from "./features/common/About";
 import Contact from "./features/common/Contact";
+import { SelectedLoggedUser } from "./features/Auth/AuthSlice";
 export default function App() {
   let dispatch = useDispatch();
 
-  let user = JSON.parse(localStorage.getItem("user"));
-  console.log(user, "user1");
+  let user = useSelector(SelectedLoggedUser)
+  // console.log(user, "user1");
 
   const options = {
     timeout: 5000,

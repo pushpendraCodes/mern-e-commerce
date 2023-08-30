@@ -35,7 +35,7 @@ export function ProductList() {
 
   const itemPerPage = useSelector((state) => state.product.itemPerPage);
   const totalItems = useSelector((state) => state.product.totalproduct);
-  console.log(products, "products");
+  // console.log(products, "products");
 
   // filter handelchnage
   const [filter, setfilter] = useState({});
@@ -43,14 +43,14 @@ export function ProductList() {
 
   const handelChange = (e, section, option) => {
     const Newfilter = { ...filter };
-    console.log(e.target.checked);
+    // console.log(e.target.checked);
     if (e.target.checked) {
       if (Newfilter[section.id]) {
         Newfilter[section.id].push(option.value);
-        console.log(Newfilter, "Newfilter");
+        // console.log(Newfilter, "Newfilter");
       } else {
         Newfilter[section.id] = [option.value];
-        console.log(Newfilter, "Newfilter1");
+        // console.log(Newfilter, "Newfilter1");
       }
     } else {
       let index = Newfilter[section.id].findIndex((ele) => ele == option.value);
@@ -62,7 +62,7 @@ export function ProductList() {
 
   // handel sort
   const handelSort = (e, option) => {
-    console.log(option);
+    // console.log(option);
     let NewSort = {
       _sort: option._sort,
       _order: option._order,
@@ -74,7 +74,7 @@ export function ProductList() {
   const [searchQuery, setSearch] = useState();
   // handelPagination
   const handelpagination = (page) => {
-    console.log(page);
+    // console.log(page);
     setpage(page);
   };
 
@@ -429,7 +429,7 @@ export function ProductList() {
 
               <form>
                 <label
-                  for="default-search"
+                  htmlFor="default-search"
                   class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
                 >
                   Search

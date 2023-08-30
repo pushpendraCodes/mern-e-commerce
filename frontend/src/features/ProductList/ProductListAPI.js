@@ -3,7 +3,7 @@
 // let user = JSON.parse(localStorage.getItem("user"))
 export function FetchProduct(token) {
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products",
+    let response = await fetch("https://apnacart.vercel.app/products",
 
     {
       headers: {
@@ -21,7 +21,7 @@ export function FetchProduct(token) {
 // add product
 export function CreateProduct(product,token) {
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products", {
+    let response = await fetch("https://apnacart.vercel.app/products", {
       method: "POST",
       body: JSON.stringify(product),
       headers: { "content-type": "application/json",
@@ -37,11 +37,11 @@ export function CreateProduct(product,token) {
 
 export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   let queryString = "";
-  console.log(search_qurey,"search_qurey")
+  // console.log(search_qurey,"search_qurey")
 
   // filter
-  // https://mern-e-commerce-blond.vercel.app /products?category=smartphones
-  // https://mern-e-commerce-blond.vercel.app /products?brand=apple
+  // https://apnacart.vercel.app /products?category=smartphones
+  // https://apnacart.vercel.app /products?brand=apple
 
   for (let key in filter) {
     let categoryValues = filter[key];
@@ -52,8 +52,8 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   }
 
   // sort
-  // https://mern-e-commerce-blond.vercel.app /products?_sort=asc&
-  // https://mern-e-commerce-blond.vercel.app /products?_sort=desc&
+  // https://apnacart.vercel.app /products?_sort=asc&
+  // https://apnacart.vercel.app /products?_sort=desc&
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
@@ -65,15 +65,15 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
   }
 
   // pagination
-  // https://mern-e-commerce-blond.vercel.app /products?_limit=10&_page=3
+  // https://apnacart.vercel.app /products?_limit=10&_page=3
 
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
 
-  console.log(queryString, "queryString");
+  // console.log(queryString, "queryString");
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products?" + queryString,
+    let response = await fetch("https://apnacart.vercel.app/products?" + queryString,
     {
       headers: {
         "Content-Type": "application/json",
@@ -84,14 +84,14 @@ export function FilterProduct(filter, sort, pagination,search_qurey,token) {
     let data = await response.json();
     const totalItems = await response.headers.get("X-Total-Count");
     resolve({ data: data, totalproduct: totalItems });
-    console.log(data);
+    // console.log(data);
   });
 }
 
 export function selectedProduct(id,token) {
-  console.log(token);
+  // console.log(token);
   return new Promise(async (resolve) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/products/" + id,
+    let response = await fetch("https://apnacart.vercel.app/products/" + id,
 
     {
       headers: {
@@ -102,14 +102,14 @@ export function selectedProduct(id,token) {
     );
     let data = await response.json();
     resolve(data);
-    console.log(data);
+    // console.log(data);
   });
 }
 // edit product
 
 export function updateProduct(product,token) {
   return new Promise(async (resolve) => {
-    let response = await fetch(`https://mern-e-commerce-blond.vercel.app/products/` + product.id, {
+    let response = await fetch(`https://apnacart.vercel.app/products/` + product.id, {
       method: "PATCH",
       body: JSON.stringify(product),
       headers: { "content-type": "application/json",

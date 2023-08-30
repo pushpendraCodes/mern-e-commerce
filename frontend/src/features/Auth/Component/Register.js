@@ -24,7 +24,7 @@ export function Register() {
   const onSubmit = (data) => {
     dispatch(CreateUserAsync({ email: data.email, password: data.password ,addresses:[], role:"user" }));
     // navigate("/login");
-    console.log(data);
+    // console.log(data);
     reset()
     alert.success("user created")
 

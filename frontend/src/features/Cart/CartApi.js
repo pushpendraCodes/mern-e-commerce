@@ -3,7 +3,7 @@
 
 export function AddToCart(item,token) {
   return new Promise(async (resolve, reject) => {
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/cart", {
+    let response = await fetch("https://apnacart.vercel.app/cart", {
       method: "POST",
       body: JSON.stringify(item),
       headers: { "content-type": "application/json",
@@ -12,7 +12,7 @@ export function AddToCart(item,token) {
 
     try {
       let data = await response.json();
-      console.log(data);
+      // console.log(data);
       resolve({data});
     } catch (error) {
       reject("something wrong");
@@ -21,8 +21,8 @@ export function AddToCart(item,token) {
 }
 export function getUserCart(user) {
   return new Promise(async (resolve) => {
-    console.log(user);
-    let response = await fetch("https://mern-e-commerce-blond.vercel.app/cart/" + user.user,
+    // console.log(user);
+    let response = await fetch("https://apnacart.vercel.app/cart/" + user.user,
     {
       headers: { "content-type": "application/json",
       authorization:user.token , },
@@ -30,13 +30,14 @@ export function getUserCart(user) {
 
     );
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
     resolve({ data });
   });
 }
 export function removeProduct(productId,token) {
+  console.log(productId,token);
   return new Promise(async (resolve) => {
-    const response = await fetch("https://mern-e-commerce-blond.vercel.app/cart/" + productId, {
+    const response = await fetch("https://apnacart.vercel.app/cart/" + productId, {
       method: "DELETE",
       body: JSON.stringify({ id: productId }),
       headers: { "content-type": "application/json" ,
@@ -50,29 +51,29 @@ export function removeProduct(productId,token) {
 export function handelqunatity(value) {
   return new Promise(async (resolve) => {
 
-    const response = await fetch("https://mern-e-commerce-blond.vercel.app/cart/" + value.id, {
+    const response = await fetch("https://apnacart.vercel.app/cart/" + value.id, {
       method: "PATCH",
       body: JSON.stringify(value),
       headers: { "content-type": "application/json",
       authorization:value.token  },
     });
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
     resolve({ data});
   });
 }
 export function resetCart(user_id) {
   return new Promise(async (resolve) => {
-    console.log(user_id);
+    // console.log(user_id);
     let user = JSON.parse(localStorage.getItem("user"))
     let response = await getUserCart(user);
     let items = await response.data;
-    console.log(items);
+    // console.log(items);
     for (let item of items) {
       await removeProduct(item.id,user.token);
     }
 
-    console.log(items);
+    // console.log(items);
     resolve({ success: "success" });
   });
 }

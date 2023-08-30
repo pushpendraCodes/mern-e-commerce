@@ -16,7 +16,7 @@ export default function ForgetPass() {
     formState: { errors },
   } = useForm();
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function ForgetPass() {
           <form
             noValidate
             onSubmit={handleSubmit((data) => {
-              console.log(data);
+              // console.log(data);
               dispatch(resetPasswordRequestAsync(data.email))
 
             })}

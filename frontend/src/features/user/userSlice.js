@@ -15,39 +15,29 @@ const initialState = {
 export const fetchLoggedInUserAsync = createAsyncThunk(
   'user/fetchLoggedInUser',
   async (user) => {
-    console.log(user)
+    // console.log(user)
     const response = await fetchLoggedInUser(user);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
 
-// export const fetchOrdersByUserIdAsync = createAsyncThunk(
-//     "user/getOrders",
-//     async (userId, { rejectWithValue }) => {
-//       try {
-//         // console.log(item);
-//         const response = await  fetchOrdersByUserId(userId);
-//         return response.data;
-//       } catch (error) {
-//         rejectWithValue(error);
-//       }
-//     }
-//   );
+
 
   export const UpdateUserAsync = createAsyncThunk(
     "auth/updateuser",
-    async (update) => {
-      const response = await UpdateUser(update);
+    async ({newAds,token}) => {
+      console.log(newAds,token,"token")
+      const response = await UpdateUser(newAds,token);
       return response.data;
     }
   );
 export const fetchOrdersByUserIdAsync = createAsyncThunk(
     "user/paginationOrders",
-    async ({pagination,id},{ rejectWithValue }) => {
+    async ({pagination,id,token},{ rejectWithValue }) => {
       try {
-        console.log(pagination,id,"data");
-        const response = await  fetchOrdersByUserId(pagination,id);
+        // console.log(pagination,id,"data");
+        const response = await  fetchOrdersByUserId(pagination,id,token);
         return response
       } catch (error) {
         rejectWithValue(error);
@@ -95,7 +85,7 @@ export const UserSlice = createSlice({
         state.status = "idle";
         state.userInfo = action.payload;
 
-        console.log(action.payload);
+        // console.log(action.payload);
 
       })
   },

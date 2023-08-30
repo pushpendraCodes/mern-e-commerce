@@ -3,7 +3,7 @@
 export function CreateOrder(order,token) {
     return new Promise(async (resolve) => {
 
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order", {
+      let response = await fetch("https://apnacart.vercel.app/order", {
         method: "POST",
         body: JSON.stringify(order),
         headers: { "content-type": "application/json",
@@ -11,7 +11,7 @@ export function CreateOrder(order,token) {
       });
 
       let data = await response.json();
-      console.log(data);
+      // console.log(data);
       resolve({data});
     });
   }
@@ -23,7 +23,7 @@ export function CreateOrder(order,token) {
 export function updateOrder(order,token) {
     return new Promise(async (resolve) => {
 
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order/"+order.id, {
+      let response = await fetch("https://apnacart.vercel.app/order/"+order.id, {
         method: "PATCH",
         body: JSON.stringify(order),
         headers: { "content-type": "application/json",
@@ -52,7 +52,7 @@ export function updateOrder(order,token) {
 
     console.log(queryString);
     return new Promise(async (resolve) => {
-      let response = await fetch("https://mern-e-commerce-blond.vercel.app/order?"+queryString,
+      let response = await fetch("https://apnacart.vercel.app/order?"+queryString,
       {
         headers: { "content-type": "application/json",
         authorization:token },

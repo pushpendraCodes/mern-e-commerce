@@ -113,7 +113,7 @@ export const CartSlice = createSlice({
       })
       .addCase(handelQuantityAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload)
+        // console.log(action.payload)
         const index = state.cart.findIndex(item=>item.id === action.payload.id)
        state.cart[index] = action.payload
 
@@ -123,7 +123,7 @@ export const CartSlice = createSlice({
       })
       .addCase(resetCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload)
+        // console.log(action.payload)
         state.cart = []
 
 

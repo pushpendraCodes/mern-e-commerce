@@ -163,7 +163,7 @@ export default function Navbar({ children }) {
   };
 
   const user = useSelector(SelectedLoggedUser);
-  console.log(user);
+  // console.log(user);
 
   const Cart = useSelector(cart);
   return (
@@ -420,7 +420,7 @@ export default function Navbar({ children }) {
                 <div class="slide-track-1">
                   {category.map((item, i) => {
                     return (
-                      <div class="slide flex flex-col ">
+                      <div key={i} class="slide flex flex-col ">
                         <img
                           title={item.value}
                           style={{

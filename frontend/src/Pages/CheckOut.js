@@ -24,7 +24,7 @@ export function Checkout() {
 
   let navigate = useNavigate();
   const user = useSelector(logged_user_details);
-  console.log(user, "user");
+  // console.log(user, "user");
   const {
     register,
     handleSubmit,
@@ -33,9 +33,10 @@ export function Checkout() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    let newAds = {...user ,addresses:[...user.addresses,data]}
     dispatch(
-      UpdateUserAsync({ ...user, addresses: [...user.addresses, data] })
+      UpdateUserAsync({newAds,token })
     );
     reset();
   };
@@ -55,7 +56,7 @@ export function Checkout() {
   };
 
   let Cart = useSelector(cart);
-  console.log(Cart);
+  // console.log(Cart);
 
   let Subtotal = 0;
 

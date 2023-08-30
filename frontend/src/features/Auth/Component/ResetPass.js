@@ -25,8 +25,8 @@ export default function ResetPassword() {
     formState: { errors },
   } = useForm();
 
-  console.log(errors);
-  console.log(email, token);
+  // console.log(errors);
+  // console.log(email, token);
 
   return (
     <>

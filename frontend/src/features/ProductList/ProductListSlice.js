@@ -25,7 +25,7 @@ export const FetchProductAsync = createAsyncThunk(
 export const CreateProductAsync = createAsyncThunk(
   "product/AddProduct",
   async ({ product, token }) => {
-    console.log(product, "product");
+    // console.log(product, "product");
 
     const response = await CreateProduct(product, token);
     return response;
@@ -114,7 +114,7 @@ export const ProductList = createSlice({
         state.status = "idle";
         state.products = action.payload.data;
         state.totalproduct = action.payload.totalproduct;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(selectedProductAsync.pending, (state) => {
         state.status = "loading";

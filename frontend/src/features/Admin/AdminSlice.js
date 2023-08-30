@@ -27,7 +27,7 @@ export const LoginUserAsync = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await loginUser(userData);
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -62,7 +62,7 @@ export const AuthSlice = createSlice({
       .addCase(LoginUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedUser = action.payload;
-        console.log(action.payload);
+        // console.log(action.payload);
 
       })
       .addCase(LoginUserAsync.rejected, (state, { payload }) => {
@@ -77,7 +77,7 @@ export const AuthSlice = createSlice({
         state.status = "idle";
         state.loggedUser = action.payload;
 
-        console.log(action.payload);
+        // console.log(action.payload);
 
       })
   },
