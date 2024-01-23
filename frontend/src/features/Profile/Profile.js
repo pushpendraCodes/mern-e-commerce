@@ -24,9 +24,10 @@ let alert = useAlert()
 
   const onSubmit = (data) => {
     // console.log(data);
-    const newuser = { ...user, addresses: [...user.addresses] };
-    newuser.addresses.splice(selctedEditIndex, 1, data);
-    dispatch(UpdateUserAsync(newuser));
+    let {token} = JSON.parse(localStorage.getItem("user"))
+    let newAds = {...user ,addresses:[...user.addresses]}
+    newAds.addresses.splice(selctedEditIndex, 1, data);
+    dispatch(UpdateUserAsync({newAds,token }));
     reset();
     setselectededitform(-1);
     alert.success("address updated ")
@@ -37,6 +38,7 @@ let alert = useAlert()
     setshowAddForm(true);
   };
   const addSubmit = (data) => {
+
     let {token} = JSON.parse(localStorage.getItem("user"))
     let newAds = {...user ,addresses:[...user.addresses,data]}
     dispatch(

@@ -48,6 +48,29 @@ export function loginUser(loginInfo) {
 
   });
 }
+export function loginDemoUser() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch('https://apnacart.vercel.app/auth/loginDemo', {
+        method: 'POST',
+        // body: JSON.stringify(loginInfo),
+        headers: { 'content-type': 'application/json' },
+      });
+      const data = await response.json();
+      // console.log(response,data)
+      if (response.status === 200) {
+        resolve({ data });
+        console.log(data,"data")
+        localStorage.setItem('user',JSON.stringify(data))
+      } else {
+        reject({ data });
+      }
+    } catch (error) {
+      reject( error );
+    }
+
+  });
+}
 export function resetPasswordRequest(email) {
   return new Promise(async (resolve, reject) => {
     try {

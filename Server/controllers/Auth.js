@@ -32,10 +32,45 @@ exports.loginUser = async (req, res) => {
         {
           user: user.email,
         },
-        jwtkey
+        jwtkey,
+
       );
 
       let verify_pass = await bcrypt.compare(req.body.password, user.password);
+      !verify_pass && res.status(203).json("invalid credentials");
+
+      res.status(200).json({
+        user: user.id,
+        token: token,
+        role:user.role
+      });
+    } else {
+      res.status(203).json("invalid credentials");
+    }
+
+    // verify password
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+exports.loginDemoUser = async (req, res) => {
+  try {
+    // check user email exist
+    const user = await User.findOne({
+      email: "pushpendrapatel8055@gmail.com",
+    });
+
+    if (user) {
+      const token = jwt.sign(
+        {
+          user: user.email,
+        },
+        jwtkey,
+
+      );
+
+      let verify_pass = await bcrypt.compare("Admin1234@", user.password);
       !verify_pass && res.status(203).json("invalid credentials");
 
       res.status(200).json({
@@ -65,7 +100,7 @@ exports.resetPasswordRequest = async (req, res) => {
 
     // Also set token in email
     const resetPageLink =
-      "https://apnacart.vercel.app/reset-password?token=" + token + "&email=" + email;
+      "http://localhost:3000/reset-password?token=" + token + "&email=" + email;
     const subject = "reset password for e-commerce";
     const html = `<p>Click <a href='${resetPageLink}'>here</a> to Reset Password</p>`;
 

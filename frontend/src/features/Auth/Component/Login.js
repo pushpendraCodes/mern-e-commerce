@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   AuthStatus,
+  LoginDemoUserAsync,
   LoginUserAsync,
   SelectedLoggedUser,
   errore,
@@ -33,6 +34,12 @@ export function Login() {
     dispatch(LoginUserAsync({ email: data.email, password: data.password }));
   };
 
+
+
+   function loginDemoAccount() {
+    // alert("working")
+    dispatch(LoginDemoUserAsync({data:"demo"}))
+  }
   return (
     <div>
       {user?.token && <Navigate to="/" replace={true}></Navigate>}
@@ -145,6 +152,13 @@ export function Login() {
               Register
             </Link>
           </p>
+         <div className="mx-auto text-center "> <button
+            onClick={loginDemoAccount}
+            className="mt-10 self-center text-blue-400  text-center text-sm "
+          >
+            Login as demo admin Account
+          </button></div>
+
         </div>
       </div>
     </div>
