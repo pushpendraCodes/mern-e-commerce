@@ -15,7 +15,7 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   let Cart = useSelector(cart);
-  // console.log(Cart);
+  console.log(Cart,"cart");
 
   let user = useSelector(logged_user_details)
   let status = useSelector(cartStatus)

@@ -16,7 +16,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "json-server": "^0.17.3",
-    "leaflet": "^1.9.4",
+
     "react": "^18.2.0",
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
@@ -24,7 +24,7 @@
     "react-hook-form": "^7.45.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
-    "react-leaflet": "^4.2.1",
+
     "react-loading-skeleton": "^3.3.1",
     "react-redux": "^8.1.1",
     "react-responsive-carousel": "^3.2.23",
